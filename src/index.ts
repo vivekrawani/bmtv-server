@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { expressMiddleware } from "@apollo/server/express4"
 import bodyParser from "body-parser";
+import cors from "cors";
 
 import dotenv from "dotenv";
 import { authors, books } from "./data"
@@ -57,6 +58,7 @@ async function initServer(port: number) {
   await server.start()
 
   const app: Express = express();
+  app.use(cors())
   app.use(bodyParser.json())
   app.use("/graphql", expressMiddleware(server))
 
